@@ -9,14 +9,14 @@ public class InsertionSort {
 	}
 
 	/**
-	 * 直接插入排序
+	 * 鐩存帴鎻掑叆鎺掑簭
 	 */
 	public static void insertionSort(int[] arr){
         for( int i=0; i<arr.length-1; i++ ) {
             for( int j=i+1; j>0; j-- ) {
                 if( arr[j-1] <= arr[j] )
                     break;
-                int temp = arr[j];      //交换操作
+                int temp = arr[j];      //浜ゆ崲鎿嶄綔
                 arr[j] = arr[j-1];
                 arr[j-1] = temp;
                 System.out.println("Sorting:  " + Arrays.toString(arr));
