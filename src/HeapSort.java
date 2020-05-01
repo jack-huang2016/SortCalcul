@@ -1,4 +1,5 @@
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ public class HeapSort {
 	public static void main(String[] args) {
 		//要求将数组进行升序排序
 		//int arr[] = {4, 6, 8, 5, 9};
-		// 创建要给80000个的随机的数组
+		// 创建一个8百万个随机元素的数组
 		int[] arr = new int[8000000];
 		for (int i = 0; i < 8000000; i++) {
 			arr[i] = (int) (Math.random() * 8000000); // 生成一个[0, 8000000) 数
@@ -40,15 +41,15 @@ public class HeapSort {
 //		adjustHeap(arr, 0, arr.length);
 //		System.out.println("第2次" + Arrays.toString(arr)); // 9,6,8,5,4
 
-		//完成我们最终代码
-		//将无序序列构建成一个堆，根据升序降序需求选择大顶堆或小顶堆
+		//将以上的分步完成改写成以下动态的方式，来完成我们最终代码
+		//1)将无序序列构建成一个堆，根据升序降序需求选择大顶堆或小顶堆
 		for(int i = arr.length / 2 -1; i >=0; i--) {
 			adjustHeap(arr, i, arr.length);
 		}
 
 		/*
 		 * 2).将堆顶元素与末尾元素交换，将最大元素"沉"到数组末端;
-　　			3).重新调整结构，使其满足堆定义，然后继续交换堆顶元素与当前末尾元素，反复执行调整+交换步骤，直到整个序列有序。
+		 * 3).重新调整结构，使其满足堆定义，然后继续交换堆顶元素与当前末尾元素，反复执行调整+交换步骤，直到整个序列有序。
 		 */
 		for(int j = arr.length-1;j >0; j--) {
 			//交换
@@ -58,7 +59,7 @@ public class HeapSort {
 			adjustHeap(arr, 0, j);
 		}
 
-		//System.out.println("数组=" + Arrays.toString(arr));
+		System.out.println("数组=" + Arrays.toString(arr));
 
 	}
 
