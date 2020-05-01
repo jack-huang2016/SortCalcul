@@ -26,5 +26,4 @@ public class SelectSort {
 	            System.out.println(Arrays.toString(arr));
 	      }
 	}
-	
 }

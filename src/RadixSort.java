@@ -1,66 +1,65 @@
 import java.util.Arrays;
 
 public class RadixSort {
-
 	public static void main(String[] args) {
 		int[] a = {6, 23, 8, 56, 5, 3 , 4, 1};
 		radixSort(a);
 	}
 
 	/**
-	 * »ùÊıÅÅĞò£¨LSD ´ÓµÍÎ»¿ªÊ¼£©
+	 * åŸºæ•°æ’åºï¼ˆLSD ä»ä½ä½å¼€å§‹ï¼‰
 	 *
-	 * »ùÊıÅÅĞòÊÊÓÃÓÚ£º
-	 *  (1)Êı¾İ·¶Î§½ÏĞ¡£¬½¨ÒéÔÚĞ¡ÓÚ1000
-	 *  (2)Ã¿¸öÊıÖµ¶¼Òª´óÓÚµÈÓÚ0
+	 * åŸºæ•°æ’åºé€‚ç”¨äºï¼š
+	 *  (1)æ•°æ®èŒƒå›´è¾ƒå°ï¼Œå»ºè®®åœ¨å°äº1000
+	 *  (2)æ¯ä¸ªæ•°å€¼éƒ½è¦å¤§äºç­‰äº0
 	 *
-	 * ¢Ù. È¡µÃÊı×éÖĞµÄ×î´óÊı£¬²¢È¡µÃÎ»Êı£»
-	 * ¢Ú. arrÎªÔ­Ê¼Êı×é£¬´Ó×îµÍÎ»¿ªÊ¼È¡Ã¿¸öÎ»×é³ÉradixÊı×é£»
-	 * ¢Û. ¶Ôradix½øĞĞ¼ÆÊıÅÅĞò£¨ÀûÓÃ¼ÆÊıÅÅĞòÊÊÓÃÓÚĞ¡·¶Î§ÊıµÄÌØµã£©£»
-	 * @param arr    ´ıÅÅĞòÊı×é
+	 * â‘ . å–å¾—æ•°ç»„ä¸­çš„æœ€å¤§æ•°ï¼Œå¹¶å–å¾—ä½æ•°ï¼›
+	 * â‘¡. arrä¸ºåŸå§‹æ•°ç»„ï¼Œä»æœ€ä½ä½å¼€å§‹å–æ¯ä¸ªä½ç»„æˆradixæ•°ç»„ï¼›
+	 * â‘¢. å¯¹radixè¿›è¡Œè®¡æ•°æ’åºï¼ˆåˆ©ç”¨è®¡æ•°æ’åºé€‚ç”¨äºå°èŒƒå›´æ•°çš„ç‰¹ç‚¹ï¼‰ï¼›
+	 * @param arr    å¾…æ’åºæ•°ç»„
 	 */
 	public static void radixSort(int[] arr){
-	    if(arr.length <= 1) return;
+		if(arr.length <= 1) return;
 
-	    //È¡µÃÊı×éÖĞµÄ×î´óÊı£¬²¢È¡µÃÎ»Êı
-	    int max = 0;
-	    for(int i = 0; i < arr.length; i++){
-	        if(max < arr[i]){
-	            max = arr[i];
-	        }
-	    }
-	    int maxDigit = 1;
-	    while(max / 10 > 0){
-	        maxDigit++;
-	        max = max / 10;
-	    }
-	    System.out.println("maxDigit: " + maxDigit);
+		//å–å¾—æ•°ç»„ä¸­çš„æœ€å¤§æ•°ï¼Œå¹¶å–å¾—ä½æ•°
+		int max = 0;
+		for(int i = 0; i < arr.length; i++){
+			if(max < arr[i]){
+				max = arr[i];
+			}
+		}
+		int maxDigit = 1;
+		while(max / 10 > 0){
+			maxDigit++;
+			max = max / 10;
+		}
+		System.out.println("maxDigit: " + maxDigit);
 
-	    //ÉêÇëÒ»¸öÍ°¿Õ¼ä
-	    int[][] buckets = new int[10][arr.length];
-	    int base = 10;
+		//ç”³è¯·ä¸€ä¸ªæ¡¶ç©ºé—´
+		int[][] buckets = new int[10][arr.length];
+		int base = 10;
 
-	    //´ÓµÍÎ»µ½¸ßÎ»£¬¶ÔÃ¿Ò»Î»±éÀú£¬½«ËùÓĞÔªËØ·ÖÅäµ½Í°ÖĞ
-	    for(int i = 0; i < maxDigit; i++){
-	        int[] bktLen = new int[10];        //´æ´¢¸÷¸öÍ°ÖĞ´æ´¢ÔªËØµÄÊıÁ¿
+		//ä»ä½ä½åˆ°é«˜ä½ï¼Œå¯¹æ¯ä¸€ä½éå†ï¼Œå°†æ‰€æœ‰å…ƒç´ åˆ†é…åˆ°æ¡¶ä¸­
+		for(int i = 0; i < maxDigit; i++){
+			int[] bktLen = new int[10];        //å­˜å‚¨å„ä¸ªæ¡¶ä¸­å­˜å‚¨å…ƒç´ çš„æ•°é‡
 
-	        //·ÖÅä£º½«ËùÓĞÔªËØ·ÖÅäµ½Í°ÖĞ
-	        for(int j = 0; j < arr.length; j++){
-	            int whichBucket = (arr[j] % base) / (base / 10);
-	            buckets[whichBucket][bktLen[whichBucket]] = arr[j];
-	            bktLen[whichBucket]++;
-	        }
+			//åˆ†é…ï¼šå°†æ‰€æœ‰å…ƒç´ åˆ†é…åˆ°æ¡¶ä¸­
+			for(int j = 0; j < arr.length; j++){
+				int whichBucket = (arr[j] % base) / (base / 10);
+				buckets[whichBucket][bktLen[whichBucket]] = arr[j];
+				bktLen[whichBucket]++;
+			}
 
-	        //ÊÕ¼¯£º½«²»Í¬Í°ÀïÊı¾İ°¤¸öÀÌ³öÀ´,ÎªÏÂÒ»ÂÖ¸ßÎ»ÅÅĞò×ö×¼±¸,ÓÉÓÚ¿¿½üÍ°µ×µÄÔªËØÅÅÃû¿¿Ç°,Òò´Ë´ÓÍ°µ×ÏÈÀÌ
-	        int k = 0;
-	        for(int b = 0; b < buckets.length; b++){
-	            for(int p = 0; p < bktLen[b]; p++){
-	                arr[k++] = buckets[b][p];
-	            }
-	        }
+			//æ”¶é›†ï¼šå°†ä¸åŒæ¡¶é‡Œæ•°æ®æŒ¨ä¸ªæå‡ºæ¥,ä¸ºä¸‹ä¸€è½®é«˜ä½æ’åºåšå‡†å¤‡,ç”±äºé è¿‘æ¡¶åº•çš„å…ƒç´ æ’åé å‰,å› æ­¤ä»æ¡¶åº•å…ˆæ
+			int k = 0;
+			for(int b = 0; b < buckets.length; b++){
+				for(int p = 0; p < bktLen[b]; p++){
+					arr[k++] = buckets[b][p];
+				}
+			}
 
-	        System.out.println("Sorting: " + Arrays.toString(arr));
-	        base *= 10;
-	    }
+			System.out.println("Sorting: " + Arrays.toString(arr));
+			base *= 10;
+		}
 	}
 }

@@ -1,7 +1,6 @@
 import java.util.Arrays;
 
 public class MergingSort {
-
 	public static void main(String[] args) {
 		int[] a = {6, 23, 8, 56, 5, 3 , 4, 1};
 		mergingSort(a);
@@ -9,40 +8,40 @@ public class MergingSort {
 	}
 
 	/**
-	 * ¹é²¢ÅÅĞò£¨µİ¹é£©
+	 * å½’å¹¶æ’åºï¼ˆé€’å½’ï¼‰
 	 *
-	 * ¢Ù. ½«ĞòÁĞÃ¿ÏàÁÚÁ½¸öÊı×Ö½øĞĞ¹é²¢²Ù×÷£¬ĞÎ³É floor(n/2)¸öĞòÁĞ£¬ÅÅĞòºóÃ¿¸öĞòÁĞ°üº¬Á½¸öÔªËØ£»
-	 * ¢Ú. ½«ÉÏÊöĞòÁĞÔÙ´Î¹é²¢£¬ĞÎ³É floor(n/4)¸öĞòÁĞ£¬Ã¿¸öĞòÁĞ°üº¬ËÄ¸öÔªËØ£»
-	 * ¢Û. ÖØ¸´²½Öè¢Ú£¬Ö±µ½ËùÓĞÔªËØÅÅĞòÍê±Ï¡£
-	 * @param arr    ´ıÅÅĞòÊı×é
+	 * â‘ . å°†åºåˆ—æ¯ç›¸é‚»ä¸¤ä¸ªæ•°å­—è¿›è¡Œå½’å¹¶æ“ä½œï¼Œå½¢æˆ floor(n/2)ä¸ªåºåˆ—ï¼Œæ’åºåæ¯ä¸ªåºåˆ—åŒ…å«ä¸¤ä¸ªå…ƒç´ ï¼›
+	 * â‘¡. å°†ä¸Šè¿°åºåˆ—å†æ¬¡å½’å¹¶ï¼Œå½¢æˆ floor(n/4)ä¸ªåºåˆ—ï¼Œæ¯ä¸ªåºåˆ—åŒ…å«å››ä¸ªå…ƒç´ ï¼›
+	 * â‘¢. é‡å¤æ­¥éª¤â‘¡ï¼Œç›´åˆ°æ‰€æœ‰å…ƒç´ æ’åºå®Œæ¯•ã€‚
+	 * @param arr    å¾…æ’åºæ•°ç»„
 	 */
 	public static int[] mergingSort(int[] arr){
-	    if(arr.length <= 1) return arr;
+		if(arr.length <= 1) return arr;
 
-	    int num = arr.length >> 1;
-	    int[] leftArr = Arrays.copyOfRange(arr, 0, num);
-	    int[] rightArr = Arrays.copyOfRange(arr, num, arr.length);
-	    System.out.println("split two array: " + Arrays.toString(leftArr) + " And " + Arrays.toString(rightArr));
-	    return mergeTwoArray(mergingSort(leftArr), mergingSort(rightArr));      //²»¶Ï²ğ·ÖÎª×îĞ¡µ¥Ôª£¬ÔÙÅÅĞòºÏ²¢
+		int num = arr.length >> 1;
+		int[] leftArr = Arrays.copyOfRange(arr, 0, num);
+		int[] rightArr = Arrays.copyOfRange(arr, num, arr.length);
+		System.out.println("split two array: " + Arrays.toString(leftArr) + " And " + Arrays.toString(rightArr));
+		return mergeTwoArray(mergingSort(leftArr), mergingSort(rightArr));      //ä¸æ–­æ‹†åˆ†ä¸ºæœ€å°å•å…ƒï¼Œå†æ’åºåˆå¹¶
 	}
 
 	private static int[] mergeTwoArray(int[] arr1, int[] arr2){
-	    int i = 0, j = 0, k = 0;
-	    int[] result = new int[arr1.length + arr2.length];  //ÉêÇë¶îÍâµÄ¿Õ¼ä´æ´¢ºÏ²¢Ö®ºóµÄÊı×é
-	    while(i < arr1.length && j < arr2.length){      //Ñ¡È¡Á½¸öĞòÁĞÖĞµÄ½ÏĞ¡Öµ·ÅÈëĞÂÊı×é
-	        if(arr1[i] <= arr2[j]){
-	            result[k++] = arr1[i++];
-	        }else{
-	            result[k++] = arr2[j++];
-	        }
-	    }
-	    while(i < arr1.length){     //ĞòÁĞ1ÖĞ¶àÓàµÄÔªËØÒÆÈëĞÂÊı×é
-	        result[k++] = arr1[i++];
-	    }
-	    while(j < arr2.length){     //ĞòÁĞ2ÖĞ¶àÓàµÄÔªËØÒÆÈëĞÂÊı×é
-	        result[k++] = arr2[j++];
-	    }
-	    System.out.println("Merging: " + Arrays.toString(result));
-	    return result;
+		int i = 0, j = 0, k = 0;
+		int[] result = new int[arr1.length + arr2.length];  //ç”³è¯·é¢å¤–çš„ç©ºé—´å­˜å‚¨åˆå¹¶ä¹‹åçš„æ•°ç»„
+		while(i < arr1.length && j < arr2.length){      //é€‰å–ä¸¤ä¸ªåºåˆ—ä¸­çš„è¾ƒå°å€¼æ”¾å…¥æ–°æ•°ç»„
+			if(arr1[i] <= arr2[j]){
+				result[k++] = arr1[i++];
+			}else{
+				result[k++] = arr2[j++];
+			}
+		}
+		while(i < arr1.length){     //åºåˆ—1ä¸­å¤šä½™çš„å…ƒç´ ç§»å…¥æ–°æ•°ç»„
+			result[k++] = arr1[i++];
+		}
+		while(j < arr2.length){     //åºåˆ—2ä¸­å¤šä½™çš„å…ƒç´ ç§»å…¥æ–°æ•°ç»„
+			result[k++] = arr2[j++];
+		}
+		System.out.println("Merging: " + Arrays.toString(result));
+		return result;
 	}
 }

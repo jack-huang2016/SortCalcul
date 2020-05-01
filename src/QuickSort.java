@@ -2,66 +2,64 @@ import java.util.Arrays;
 import java.util.Stack;
 
 public class QuickSort {
-
 	public static void main(String[] args) {
 		int[] a = {6, 23, 8, 56, 5, 3 , 4, 1};
 		quickSortByStack(a);
 		System.out.println(Arrays.toString(a));
-		
+
 	}
-	
+
 	/**
-	 * ¿ìËÙÅÅĞò£¨·Çµİ¹é£©
+	 * å¿«é€Ÿæ’åºï¼ˆéé€’å½’ï¼‰
 	 *
-	 * ¢Ù. ´ÓÊıÁĞÖĞÌô³öÒ»¸öÔªËØ£¬³ÆÎª"»ù×¼"£¨pivot£©¡£
-	 * ¢Ú. ÖØĞÂÅÅĞòÊıÁĞ£¬ËùÓĞ±È»ù×¼ÖµĞ¡µÄÔªËØ°Ú·ÅÔÚ»ù×¼Ç°Ãæ£¬ËùÓĞ±È»ù×¼Öµ´óµÄÔªËØ°ÚÔÚ»ù×¼ºóÃæ£¨ÏàÍ¬µÄÊı¿ÉÒÔµ½ÈÎÒ»±ß£©¡£ÔÚÕâ¸ö·ÖÇø½áÊøÖ®ºó£¬¸Ã»ù×¼¾Í´¦ÓÚÊıÁĞµÄÖĞ¼äÎ»ÖÃ¡£Õâ¸ö³ÆÎª·ÖÇø£¨partition£©²Ù×÷¡£
-	 * ¢Û. °Ñ·ÖÇøÖ®ºóÁ½¸öÇø¼äµÄ±ß½ç£¨lowºÍhigh£©Ñ¹ÈëÕ»±£´æ£¬²¢Ñ­»·¢Ù¡¢¢Ú²½Öè
-	 * @param arr   ´ıÅÅĞòÊı×é
+	 * â‘ . ä»æ•°åˆ—ä¸­æŒ‘å‡ºä¸€ä¸ªå…ƒç´ ï¼Œç§°ä¸º"åŸºå‡†"ï¼ˆpivotï¼‰ã€‚
+	 * â‘¡. é‡æ–°æ’åºæ•°åˆ—ï¼Œæ‰€æœ‰æ¯”åŸºå‡†å€¼å°çš„å…ƒç´ æ‘†æ”¾åœ¨åŸºå‡†å‰é¢ï¼Œæ‰€æœ‰æ¯”åŸºå‡†å€¼å¤§çš„å…ƒç´ æ‘†åœ¨åŸºå‡†åé¢ï¼ˆç›¸åŒçš„æ•°å¯ä»¥åˆ°ä»»ä¸€è¾¹ï¼‰ã€‚åœ¨è¿™ä¸ªåˆ†åŒºç»“æŸä¹‹åï¼Œè¯¥åŸºå‡†å°±å¤„äºæ•°åˆ—çš„ä¸­é—´ä½ç½®ã€‚è¿™ä¸ªç§°ä¸ºåˆ†åŒºï¼ˆpartitionï¼‰æ“ä½œã€‚
+	 * â‘¢. æŠŠåˆ†åŒºä¹‹åä¸¤ä¸ªåŒºé—´çš„è¾¹ç•Œï¼ˆlowå’Œhighï¼‰å‹å…¥æ ˆä¿å­˜ï¼Œå¹¶å¾ªç¯â‘ ã€â‘¡æ­¥éª¤
+	 * @param arr   å¾…æ’åºæ•°ç»„
 	 */
 	public static void quickSortByStack(int[] arr){
-	    if(arr.length <= 0) return;
-	    Stack<Integer> stack = new Stack<Integer>();
+		if(arr.length <= 0) return;
+		Stack<Integer> stack = new Stack<Integer>();
 
-	    //³õÊ¼×´Ì¬µÄ×óÓÒÖ¸ÕëÈëÕ»
-	    stack.push(0);
-	    stack.push(arr.length - 1);
-	    while(!stack.isEmpty()){
-	        int high = stack.pop();     //³öÕ»½øĞĞ»®·Ö
-	        int low = stack.pop();
+		//åˆå§‹çŠ¶æ€çš„å·¦å³æŒ‡é’ˆå…¥æ ˆ
+		stack.push(0);
+		stack.push(arr.length - 1);
+		while(!stack.isEmpty()){
+			int high = stack.pop();     //å‡ºæ ˆè¿›è¡Œåˆ’åˆ†
+			int low = stack.pop();
 
-	        int pivotIdx = partition(arr, low, high);
+			int pivotIdx = partition(arr, low, high);
 
-	        //±£´æÖĞ¼ä±äÁ¿
-	        if(pivotIdx > low) {
-	            stack.push(low);
-	            stack.push(pivotIdx - 1);
-	        }
-	        if(pivotIdx < high && pivotIdx >= 0){
-	            stack.push(pivotIdx + 1);
-	            stack.push(high);
-	        }
-	    }
+			//ä¿å­˜ä¸­é—´å˜é‡
+			if(pivotIdx > low) {
+				stack.push(low);
+				stack.push(pivotIdx - 1);
+			}
+			if(pivotIdx < high && pivotIdx >= 0){
+				stack.push(pivotIdx + 1);
+				stack.push(high);
+			}
+		}
 	}
 
 	private static int partition(int[] arr, int low, int high){
-	    if(arr.length <= 0) return -1;
-	    if(low >= high) return -1;
-	    int l = low;
-	    int r = high;
+		if(arr.length <= 0) return -1;
+		if(low >= high) return -1;
+		int l = low;
+		int r = high;
 
-	    int pivot = arr[l];    //ÍÚ¿Ó1£º±£´æ»ù×¼µÄÖµ
-	    while(l < r){
-	        while(l < r && arr[r] >= pivot){  //¿Ó2£º´ÓºóÏòÇ°ÕÒµ½±È»ù×¼Ğ¡µÄÔªËØ£¬²åÈëµ½»ù×¼Î»ÖÃ¿Ó1ÖĞ
-	            r--;
-	        }
-	        arr[l] = arr[r];
-	        while(l < r && arr[l] <= pivot){   //¿Ó3£º´ÓÇ°ÍùºóÕÒµ½±È»ù×¼´óµÄÔªËØ£¬·Åµ½¸Õ²ÅÍÚµÄ¿Ó2ÖĞ
-	            l++;
-	        }
-	        arr[r] = arr[l];
-	    }
-	    arr[l] = pivot;   //»ù×¼ÖµÌî²¹µ½¿Ó3ÖĞ£¬×¼±¸·ÖÖÎµİ¹é¿ìÅÅ
-	    return l;
+		int pivot = arr[l];    //æŒ–å‘1ï¼šä¿å­˜åŸºå‡†çš„å€¼
+		while(l < r){
+			while(l < r && arr[r] >= pivot){  //å‘2ï¼šä»åå‘å‰æ‰¾åˆ°æ¯”åŸºå‡†å°çš„å…ƒç´ ï¼Œæ’å…¥åˆ°åŸºå‡†ä½ç½®å‘1ä¸­
+				r--;
+			}
+			arr[l] = arr[r];
+			while(l < r && arr[l] <= pivot){   //å‘3ï¼šä»å‰å¾€åæ‰¾åˆ°æ¯”åŸºå‡†å¤§çš„å…ƒç´ ï¼Œæ”¾åˆ°åˆšæ‰æŒ–çš„å‘2ä¸­
+				l++;
+			}
+			arr[r] = arr[l];
+		}
+		arr[l] = pivot;   //åŸºå‡†å€¼å¡«è¡¥åˆ°å‘3ä¸­ï¼Œå‡†å¤‡åˆ†æ²»é€’å½’å¿«æ’
+		return l;
 	}
-
 }

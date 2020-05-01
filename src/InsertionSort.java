@@ -1,5 +1,8 @@
 import java.util.Arrays;
 
+/**
+ * 直接插入排序
+ */
 public class InsertionSort {
 
 	public static void main(String[] args) {
@@ -8,9 +11,6 @@ public class InsertionSort {
 		System.out.println(Arrays.toString(a));
 	}
 
-	/**
-	 * 直接插入排序
-	 */
 	public static void insertionSort(int[] arr){
         for( int i=0; i<arr.length-1; i++ ) {
             for( int j=i+1; j>0; j-- ) {
