@@ -4,9 +4,52 @@ import java.util.Stack;
 public class QuickSort {
 	public static void main(String[] args) {
 		int[] a = {6, 23, 8, 56, 5, 3 , 4, 1};
+		int[] a2 = {6, 23, 8, 56, 5, 3 , 4, 1};
+		// 非递归的方式
 		quickSortByStack(a);
 		System.out.println(Arrays.toString(a));
+		// 递归的方式
+		quickSort(a2,0,a2.length-1);
+		System.out.println(Arrays.toString(a2));
 
+	}
+
+	/**
+	 *@描述 快速排序（递归）
+	 *@参数  [arr, left, right]
+	 *@返回值  void
+	 *@创建人  huang.yj
+	 *@创建时间  2020/6/11
+	 */
+	public static void quickSort(int[] arr,int left,int right){
+		if(left>right){
+			return;
+		}
+		int tmp,tem;//Temporary variables
+		int i=left;
+		int j=right;
+		int temp=arr[left];//benchmark start with the leftmost index
+		while (i<j){
+			//From right to left
+			while (temp<=arr[j]&&i<j){
+				j--;
+			}
+			//From left to right
+			while (temp>=arr[i]&&i<j){
+				i++;
+			}
+			//SWAP
+			if (i<j){
+				tmp=arr[i];
+				tem=arr[j];
+				arr[i]=tem;
+				arr[j]=tmp;
+			}
+		}
+		arr[left]=arr[i];
+		arr[i]=temp;
+		quickSort(arr,left,j-1);
+		quickSort(arr,j+1,right);
 	}
 
 	/**

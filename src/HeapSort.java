@@ -9,11 +9,12 @@ public class HeapSort {
 	public static void main(String[] args) {
 		//要求将数组进行升序排序
 		//int arr[] = {4, 6, 8, 5, 9};
+		int arr[] = {4, 6, 8, 5, 9, 12, 10, 23, 15, 31, 42};
 		// 创建一个8百万个随机元素的数组
-		int[] arr = new int[8000000];
+		/*int[] arr = new int[8000000];
 		for (int i = 0; i < 8000000; i++) {
 			arr[i] = (int) (Math.random() * 8000000); // 生成一个[0, 8000000) 数
-		}
+		}*/
 
 		System.out.println("排序前");
 		Date data1 = new Date();
